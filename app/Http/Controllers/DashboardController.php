@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
+use App\Models\ProjectModel;
+use App\Models\SubjectModel;
 
 class DashboardController extends Controller
 {
@@ -21,6 +23,8 @@ class DashboardController extends Controller
             return view('Teacher.teacherdash', $data);
         }
         elseif(Auth::user()->user_type == 3){
+            $data['getRecord'] = ProjectModel::getRecord();
+            $data['header_title'] = 'Project';
             return view('Student.studentdash', $data);
         }
         elseif(Auth::user()->user_type == 4){

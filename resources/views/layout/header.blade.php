@@ -111,6 +111,14 @@
               </p>
             </a>
         </li>
+        <li class="nav-item">
+              <a href="tables/jsgrid.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>
+               Project Report
+               </p>
+            </a>
+        </li>
         @elseif(Auth::user()->user_type == 3)
         <li class="nav-item">
             <a href="{{url ('student/dashboard')}}" class="nav-link @if(Request::segment(2) =='dashboard') active @endif">
@@ -120,6 +128,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+              <a href="tables/jsgrid.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>
+               Project Report
+               </p>
+            </a>
+        </li>
           <li class="nav-item">
             <a href="{{url ('/profile')}}" class="nav-link @if(Request::segment(2) =='dashboard') active @endif">
               <i class="nav-icon far fa-user"></i>
@@ -170,6 +186,15 @@
               </p>
             </a>
         </li>
+        <li class="nav-item">
+              <a href="tables/jsgrid.html" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>
+               Project Report
+               </p>
+            </a>
+        </li>
+        
         @endif
         <li class="nav-item">
             <a href="{{url ('logout')}}" class="nav-link ">

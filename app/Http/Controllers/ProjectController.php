@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SubjectModel;
 use App\Models\ProjectModel;
+use App\Models\User;
 use Auth;
 use Str;
 
@@ -101,6 +102,16 @@ class ProjectController extends Controller
             $project->save();
 
             return redirect()->back()->with('success','Project successfully deleted');
+
+        }
+
+        public function submit($id)
+        {
+            $project = ProjectModel::getSingle($id);
+            $project->is_delete = 2;
+            $project->save();
+
+            return redirect()->back()->with('success','Project successfully submit');
 
         }
 }

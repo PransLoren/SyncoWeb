@@ -125,6 +125,8 @@ Route::group(['middleware' => 'student'],function(){
 
     Route::get('/student/dashboard',[DashboardController::class,'dashboard']);
 
+    Route::post('student/project/project/submit/{id}', [ProjectController::class, 'submit']);
+
     //task
     Route::get('/student/assigned',[taskController::class,'Assigned']);
     Route::get('/student/accept',[taskController::class,'Accept']);

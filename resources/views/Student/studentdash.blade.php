@@ -13,30 +13,61 @@
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
-    <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="#assigned">Assigned</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#missing">Missing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#done">Done</a>
-                </li>
-                <!-- Add more navigation items here -->
-            </ul>
-        </div>
-    </nav>
-    <hr>
-    
-    </div>
-    </div>
+
+            <h1>Project Report</h1>
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12"> 
+
+          @include ('message')
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Project List</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body p-0">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Subject</th>
+                      <th>Project Name</th>
+                      <th>Homework Date</th>
+                      <th>Submission Date</th>
+                      <th>Description</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($getRecord as $value)
+                      <tr>
+                        <td>{{ $value->id}}</td>
+                        <td>{{ $value->class_name}}</td>s
+                        <td>{{ $value->subject_name}}</td>
+                        <td>{{ date('d-m-Y', strtotime($value->project_date)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($value->submission_date)) }}</td>
+                        <td>{{ date('d-m-Y', strtotime($value->created_date)) }}</td>
+                        <td>
+                          <form action="{{ url('student/project/project/submit/'.$value->id) }}" method="POST" style="display: inline;">
+                          @csrf
+                          @method('POST') 
+                          <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to subject this task?')">Done</button>
+                        </form>
+                      </td>
+                      
+                        
+                      </tr>
+
+                     @endforeach
+                  </tbody>
+                </table>
+                <div style="padding: 10px; float: right;">
+                  {!! $getRecord->appends(request()->except('page'))->links() !!}
+                </div>
+              </div>
+            </div>
 </div>
 </div>
     <!-- /.content-header -->
