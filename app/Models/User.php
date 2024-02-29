@@ -32,7 +32,7 @@ class User extends Authenticatable
         return $this->hasMany(AssignSubjectApiTeacher::class, 'teacher_id', 'id');
     }
 
-    public function getSingle($id)
+    public static function getSingle($id)
     {
         return self::find($id);
     }

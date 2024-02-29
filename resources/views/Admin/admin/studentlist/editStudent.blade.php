@@ -26,18 +26,18 @@
                     <div class = "row">
                         <div class="form-group col-md-6">
                             <label>First Name<span style="color: red;">*</span></label>
-                            <input type="text" class="form-control" name="name" value = "{{old('name', $getRecord->name)}}" placeholder="First Name" required>
+                            <input type="text" class="form-control" name="name" value = "{{old('name', $getStudent->name)}}" placeholder="First Name" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Last Name<span style="color: red;">*</span></label>
-                            <input type="text" class="form-control" name="last_name" value = "{{old('last_name', $getRecord->last_name)}}" placeholder="Last Name" required>
+                            <input type="text" class="form-control" name="last_name" value = "{{old('last_name', $getStudent->last_name)}}" placeholder="Last Name" required>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Gender<span style="color: red;">*</span></label>
                             <select class="form-control" required name="gender">
                                 <option value="">Select Gender</option>
-                                <option {{  (old('gender', $getRecord->gender) == 'Male') ? 'selected' : '' }} value="Male">Male</option>
-                                <option {{  (old('gender', $getRecord->gender) == 'Female') ? 'selected' : '' }} value="Female">Female</option>  
+                                <option {{  (old('gender', $getStudent->gender) == 'Male') ? 'selected' : '' }} value="Male">Male</option>
+                                <option {{  (old('gender', $getStudent->gender) == 'Female') ? 'selected' : '' }} value="Female">Female</option>  
 
                             </select>
                         </div>
@@ -45,15 +45,15 @@
                             <label>Subject<span style="color: red;">*</span></label>
                             <select class="form-control" required name="class_id">
                                 <option value="">Select Subject</option>
-                                @foreach($getClass as $value)
-                                  <option {{  (old('class_id', $getRecord->class_id) == $value->id) ? 'selected' : '' }} value ="{{ $value->id }}">{{ $value->name }}</option> 
+                                @foreach($getSubject as $value)
+                                  <option {{  (old('class_id', $getStudent->class_id) == $value->id) ? 'selected' : '' }} value ="{{ $value->id }}">{{ $value->name }}</option> 
                                 @endforeach
 
                             </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Date of Birth<span style="color: red;">*</span></label>
-                            <input type="date" class="form-control" required value = "{{old('date_of_birth', $getRecord->date_of_birth)}}" name="date_of_birth">
+                            <input type="date" class="form-control" required value = "{{old('date_of_birth', $getStudent->date_of_birth)}}" name="date_of_birth">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Profile Picture<span style="color: red;">*</span></label>
@@ -63,8 +63,8 @@
                             <label>Status<span style="color: red;">*</span></label>
                             <select class="form-control" required name="status">
                                 <option value="">Select Status</option>
-                                <option {{ (old('status', $getRecord->status) == 0) ? 'selected' : '' }} value="0">Active</option>
-                                <option {{ (old('status', $getRecord->status) == 1) ? 'selected' : '' }} value="1">Inactive</option>  
+                                <option {{ (old('status', $getStudent->status) == 0) ? 'selected' : '' }} value="0">Active</option>
+                                <option {{ (old('status', $getStudent->status) == 1) ? 'selected' : '' }} value="1">Inactive</option>  
 
                             </select>
                         </div>
@@ -74,7 +74,7 @@
 
                   <div class="form-group">
                     <label>Email address<span style="color: red;">*</span></label>
-                    <input type="email" class="form-control" name="email" value = "{{old('email',  $getRecord->email)}}"  placeholder="Email" required>
+                    <input type="email" class="form-control" name="email" value = "{{old('email',  $getStudent->email)}}"  placeholder="Email" required>
                     <div style="color:red">{{$errors->first('email')}}</div>
                   </div>
                   <div class="form-group">

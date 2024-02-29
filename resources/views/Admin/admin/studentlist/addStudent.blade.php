@@ -42,7 +42,7 @@
                         <div class="form-group col-md-6">
                             <label>Class<span style="color: red;">*</span></label>
                             <select class="form-control"  name="subject">
-                                <option value="">Select Class</option>
+                                <option value="">Select Subject</option>
                                 @foreach($getSubject as $value)
                                   <option value ="{{ $value->id }}">{{ $value->name }}</option> 
                                 @endforeach

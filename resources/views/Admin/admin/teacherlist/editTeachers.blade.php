@@ -45,8 +45,8 @@
                             <label>Class<span style="color: red;">*</span></label>
                             <select class="form-control" required name="class_id">
                                 <option value="">Select Class</option>
-                                @foreach($getClass as $value)
-                                  <option {{  (old('class_id', $getRecord->class_id) == $value->id) ? 'selected' : '' }} value ="{{ $value->id }}">{{ $value->name }}</option> 
+                                @foreach($getSubject as $value)
+                                  <option {{  (old('class_id', $getTeacher->class_id) == $value->id) ? 'selected' : '' }} value ="{{ $value->id }}">{{ $value->name }}</option> 
                                 @endforeach
 
                             </select>
@@ -63,8 +63,8 @@
                             <label>Status<span style="color: red;">*</span></label>
                             <select class="form-control" required name="status">
                                 <option value="">Select Status</option>
-                                <option {{ (old('status', $getRecord->status) == 0) ? 'selected' : '' }} value="0">Active</option>
-                                <option {{ (old('status', $getRecord->status) == 1) ? 'selected' : '' }} value="1">Inactive</option>  
+                                <option {{ (old('status', $getTeacher->status) == 0) ? 'selected' : '' }} value="0">Active</option>
+                                <option {{ (old('status', $getTeacher->status) == 1) ? 'selected' : '' }} value="1">Inactive</option>  
 
                             </select>
                         </div>
@@ -74,7 +74,7 @@
 
                   <div class="form-group">
                     <label>Email address<span style="color: red;">*</span></label>
-                    <input type="email" class="form-control" name="email" value = "{{old('email',  $getRecord->email)}}"  placeholder="Email" required>
+                    <input type="email" class="form-control" name="email" value = "{{old('email',  $getTeacher->email)}}"  placeholder="Email" required>
                     <div style="color:red">{{$errors->first('email')}}</div>
                   </div>
                   <div class="form-group">
