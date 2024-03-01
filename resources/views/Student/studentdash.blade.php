@@ -50,7 +50,7 @@
                         <td>{{ date('d-m-Y', strtotime($value->submission_date)) }}</td>
                         <td>{{ date('d-m-Y', strtotime($value->created_date)) }}</td>
                         <td>
-                          <form action="{{ url('student/project/project/submit/'.$value->id) }}" method="POST" style="display: inline;">
+                          <form action="{{ url('student/project/https://github.com/Kuhwu/Synco/blob/main/resources/views/Admin/admin/homework/list1.blade.phpproject/submit/'.$value->id) }}" method="POST" style="display: inline;">
                           @csrf
                           @method('POST') 
                           <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to subject this task?')">Done</button>
