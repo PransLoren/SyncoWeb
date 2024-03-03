@@ -17,22 +17,14 @@ class DashboardController extends Controller
             $data['header_title'] = "Teacher List";
             $data['getStudent'] = User::getStudent();
             $data['header_title'] = "Student List";
+            $data['getRecord'] = SubjectModel::getRecord();
+            $data['header_title'] = "Subject List";
             return view('Admin.admindash', $data);
-        }
-        elseif(Auth::user()->user_type == 2){
-            return view('Teacher.teacherdash', $data);
         }
         elseif(Auth::user()->user_type == 3){
             $data['getRecord'] = ProjectModel::getRecord();
             $data['header_title'] = 'Project';
             return view('Student.studentdash', $data);
-        }
-        elseif(Auth::user()->user_type == 4){
-            $data['getTeacher'] = User::getTeacher();
-            $data['header_title'] = "Teacher List";
-            $data['getStudent'] = User::getStudent();
-            $data['header_title'] = "Student List";
-            return view('Manager.managerdash', $data);
         }
     }
 }

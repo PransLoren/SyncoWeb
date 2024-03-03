@@ -6,13 +6,8 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Student List (Total: {{ $getStudent->total() }} )</h1>
+            <h1>User List (Total: {{ $getStudent->total() }} )</h1>
           </div>
-
-          <div class="col-sm-6" style="text-align: right;">
-          <a href="{{url('admin/student/add')}}" class="btn btn-primary"> Add New Student</a>
-          </div>
-
         </div>
       </div>
     </section>

@@ -27,16 +27,6 @@
                           <div class="card-body">
 
                           <div class="form-group">
-                            <label>Class <span style="color:red">*</span></label>
-                            <select class="form-control"  name="class_name" required>
-                                <option value="">Select Subject</option>
-                                @foreach($getSubject as $subject)
-                                <option value="{{ $subject->name}}">{{ $subject->name}}</option>
-                                @endforeach
-                            </select>
-                          </div>
-
-                          <div class="form-group">
                             <label>Project Name <span style="color:red">*</span></label>
                             <input type="text" class="form-control" name="subject_name" id="getSubject" value="{{ $getRecord->subject->name ?? '' }}" >
                         </div>
@@ -50,13 +40,6 @@
                             <label>Submission Date <span style="color:red">*</span></label>
                             <input type="date" class="form-control" name="submission_date" required>
                           </div>
-
-                          <div class="form-group">
-                            <label>Document </label>
-                            <input type="file" class="form-control" name="document_file" >
-                          </div>
-
-
 
                           <div class="form-group">
                             <label>Description <span style="color:red">*</span></label>
