@@ -36,5 +36,23 @@
           </form>
         </div>
       </div>
+      <div class="panels-container">
+        <div class="panel left-panel">
+          <div class="content">
+            <h3>New here ?</h3>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
+              ex ratione. Aliquid!
+            </p>
+            <a href="{{url('registration')}}">
+              <button class="btn transparent" id="sign-up-btn">
+                Sign up
+              </button>
+            </a>
+          </div>
+          <img src="#" class="image" alt="" />
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -13,8 +13,6 @@ class DashboardController extends Controller
     public function dashboard(){
         $data['header_title'] = "Dashboard";
         if(Auth::user()->user_type == 1){
-            $data['getTeacher'] = User::getTeacher();
-            $data['header_title'] = "Teacher List";
             $data['getStudent'] = User::getStudent();
             $data['header_title'] = "Student List";
             $data['getRecord'] = SubjectModel::getRecord();

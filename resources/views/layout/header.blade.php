@@ -90,23 +90,13 @@
         @elseif(Auth::user()->user_type == 3)
         <!-- Project Section -->
         <li class="nav-item @if(Request::segment(2) == 'project') menu-is-opening menu-open @endif">
-          <a href="#" class="nav-link  @if(Request::segment(2) =='project') active @endif">
-            <i class="nav-icon fas fa-table"></i>
+          <a href="{{url ('student/project/project/add')}}" class="nav-link  @if(Request::segment(2) =='project') active @endif">
             <p>
+            <i class="nav-icon fas fa-table left"></i>
               Project
-              <i class="fas fa-angle-left right"></i>
+              <i class="fas fa-plus right"></i>
             </p>
           </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{url ('student/project/project/add')}}" class="nav-link @if(Request::segment(3) =='project') active @endif">
-                <i class="far fa-circle nav-icon"></i>
-                <p>
-                  Create Project
-                </p>
-              </a>
-            </li>
-          </ul>
         </li>
 
         <li class="nav-item">

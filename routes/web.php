@@ -21,14 +21,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/',[WebAuthController::class,'login']);
+Route::get('/',[WebAuthController::class,'loginuser'])->name('loginuser');
+Route::get('/registration',[WebAuthController::class,'registration'])->name('registration');
 Route::get('logout',[WebAuthController::class,'logout']);
 Route::get('forgot-password',[WebAuthController::class,'forgotpassword']);
 Route::get('reset/{token}',[WebAuthController::class,'reset']);
 
 Route::post('login',[WebAuthController::class,'Authlogin'])->name('login');
+Route::post('register', [WebAuthController::class, 'register'])->name('register');
 Route::post('forgot-password',[WebAuthController::class,'PostForgotPassword']);
 Route::post('reset/{token}',[WebAuthController::class,'PostReset']);
+
 
 
 Route::get('/admin/dashboard', function () {

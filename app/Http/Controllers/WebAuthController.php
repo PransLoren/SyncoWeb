@@ -16,6 +16,10 @@ class WebAuthController extends Controller
         return view('Auth.forgotpassword');
     }
 
+    public function loginuser(){
+        return view("Auth.login");
+    }
+
     public function login(){
             
         if(!empty(Auth::check())){
@@ -62,21 +66,28 @@ class WebAuthController extends Controller
         }
     }
 
-    public function PostForgotPassword(Request $request){
+    public function registration(){
+        return view("Auth.register");
+    }
 
-        $user = User::getEmailSingle($request->email);
-        if(!empty($user)){
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:5|max:20|confirmed',
+        ]);
 
-            $user->remember_token = Str::random(30);
-            $user->save();
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->user_type = 3; 
+        $user->save();
 
-            Mail::to($user->email)->send(new ForgotPasswordMail($user));
+        Auth::login($user);
 
-            return redirect()->back()->with('success', 'Please check your email');
-        }
-        else{
-            return redirect()->back()->with('error', 'Email not found in the System');
-        }
+        return redirect('/');
     }
 
     public function reset($remember_token){
