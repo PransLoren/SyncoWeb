@@ -91,7 +91,9 @@ Route::group(['middleware' => 'student'],function(){
      Route::post('student/project/project/add', [ProjectController::class, 'insert']);
      Route::get('student/project/project/edit/{id}', [ProjectController::class, 'edit']);
      Route::post('student/project/project/edit/{id}', [ProjectController::class, 'update']);
- 
+     Route::post('/invite/{projectId}', [ProjectController::class, 'invite'])->name('invite');   
+     Route::post('/task/submit/{id}', [ProjectController::class, 'tasksubmit'])->name('task.submit');
+     Route::get('/task/view', [ProjectController::class, 'viewTask'])->name('task.view');
      Route::post('student/project/project/delete/{id}', [ProjectController::class, 'delete']);
 });
 

@@ -25,4 +25,6 @@ class DashboardController extends Controller
             return view('Student.studentdash', $data);
         }
     }
+
+   
 }

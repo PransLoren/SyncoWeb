@@ -7,7 +7,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-12">
-            <h1>Add New Subject</h1>
+            <h1>Add New Project</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->

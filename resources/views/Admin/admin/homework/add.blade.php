@@ -28,8 +28,9 @@
 
                           <div class="form-group">
                             <label>Project Name <span style="color:red">*</span></label>
-                            <input type="text" class="form-control" name="subject_name" id="getSubject" value="{{ $getRecord->subject->name ?? '' }}" >
+                            <input type="text" class="form-control" name="class_name" id="getproject" value="{{ $getRecord->project->name ?? '' }}" >
                         </div>
+
 
                           <div class="form-group">
                             <label>Project Date <span style="color:red">*</span></label>

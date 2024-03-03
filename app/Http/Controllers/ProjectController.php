@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use App\Models\SubjectModel;
 use App\Models\ProjectModel;
 use App\Models\User;
+use App\Models\Task; 
 use Auth;
 use Str;
 
@@ -27,10 +30,10 @@ class ProjectController extends Controller
     {
         $project = new ProjectModel;
         $project->class_name = $request->class_name;
-        $project->subject_name = $request->subject_name;
         $project->project_date = $request->project_date;
         $project->submission_date = $request->submission_date;
-        $project->description = $request->description;
+        $descriptionWithoutNbsp = str_replace('&nbsp;', '', $request->description);
+        $project->description = strip_tags($descriptionWithoutNbsp);
         $project->created_by = Auth::user()->id;
 
         if(!empty($request->file('document_file'))){
@@ -111,7 +114,48 @@ class ProjectController extends Controller
             $project->is_delete = 2;
             $project->save();
 
-            return redirect()->back()->with('success','Project successfully submit');
+            return redirect()->back()->with('success','Project successfully submit')->with('confirmation', 'Project successfully submit');;
 
         }
+
+        public function invite(Request $request, $projectId)
+        {
+            // Validate the incoming request data
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+            ]);
+     
+            if ($validator->fails()) {
+                throw ValidationException::withMessages($validator->errors()->all());
+            }
+    
+            return response()->json(['success' => 'Invitation sent successfully.']);
+        }
+
+        public function tasksubmit(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'task_name' => 'required|string|max:255',
+           
+        ]);
+        
+        // Create a new task record
+        $task = new Task();
+        $task->task_name = $request->task_name;
+        $descriptionWithoutNbsp = str_replace('&nbsp;', '', $request->task_description);
+        $task->task_description = strip_tags($descriptionWithoutNbsp);
+        $task->save();
+
+        // Return a success response
+        return response()->json(['success' => 'Task submitted successfully.']);
+    }
+
+    public function viewTask(Request $request, $taskName)
+    {
+        $taskName = $request->task_name;
+        $task = Task::where('task_name', $taskName)->first();
+        return response()->json($task);
+    }
+
 }

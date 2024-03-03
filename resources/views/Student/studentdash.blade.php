@@ -1,77 +1,240 @@
 @extends('layout.app')
-  @section('content')
+@section('content')
 
 <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0"></h1>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0"></h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
 
-            <h1>Project Report</h1>
+    <h1>Project Report</h1>
 
     <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12"> 
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
 
-          @include ('message')
-            <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Project List</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body p-0">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Subject</th>
-                      <th>Project Name</th>
-                      <th>Homework Date</th>
-                      <th>Submission Date</th>
-                      <th>Description</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach($getRecord as $value)
-                      <tr>
-                        <td>{{ $value->id}}</td>
-                        <td>{{ $value->class_name}}</td>s
-                        <td>{{ $value->subject_name}}</td>
-                        <td>{{ date('d-m-Y', strtotime($value->project_date)) }}</td>
-                        <td>{{ date('d-m-Y', strtotime($value->submission_date)) }}</td>
-                        <td>{{ date('d-m-Y', strtotime($value->created_date)) }}</td>
-                        <td>
-                          <form action="{{ url('student/project/https://github.com/Kuhwu/Synco/blob/main/resources/views/Admin/admin/homework/list1.blade.phpproject/submit/'.$value->id) }}" method="POST" style="display: inline;">
-                          @csrf
-                          @method('POST') 
-                          <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to subject this task?')">Done</button>
-                        </form>
-                      </td>
-                      
-                        
-                      </tr>
-
-                     @endforeach
-                  </tbody>
-                </table>
-                <div style="padding: 10px; float: right;">
-                  {!! $getRecord->appends(request()->except('page'))->links() !!}
+                    @include ('message')
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Project List</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body p-0">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Project Number</th>            
+                                        <th>Project Name</th>
+                                        <th>Homework Date</th>
+                                        <th>Submission Date</th>
+                                        <th>Description</th>
+                                        <th>Invite users</th>
+                                        <th>Add Tasks</th>
+                                        <th>Action</th>
+                                        <th>View</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($getRecord as $value)
+                                    <tr>
+                                        <td>{{ $value->id}}</td>
+                                        <td>{{ $value->class_name}}</td>
+                                        <td>{{ date('d-m-Y', strtotime($value->project_date)) }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($value->submission_date)) }}</td>                                    
+                                        <td>{{ $value->description }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inviteUserModal{{ $value->id }}">Invite</button>
+                                        </td>
+                                        <td>
+                                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModal{{ $value->id }}">Create Task</button>
+                                        </td>
+                                        <td>
+                                            <form action="{{ url('student/project/https://github.com/Kuhwu/Synco/blob/main/resources/views/Admin/admin/homework/list1.blade.phpproject/submit/'.$value->id) }}" method="POST" style="display: inline;">
+                                                @csrf
+                                                @method('POST')
+                                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to end this task?')">Done</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                        <button class="btn btn-info view-task" data-task-name="{{ $value->task_name }}">View Task</button>
+                                        </td>
+                                        <td>
+                                            <a href="" class="btn btn-warning">Edit Task</a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <div style="padding: 10px; float: right;">
+                                {!! $getRecord->appends(request()->except('page'))->links() !!}
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
+        </div>
+    </section>
 </div>
+
+<!-- Task Modal -->
+@foreach($getRecord as $value)
+<div class="modal fade" id="taskModal{{ $value->id }}" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel{{ $value->id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="taskModalLabel{{ $value->id }}">Task Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Task Form -->
+                @csrf
+                <form id="taskForm{{ $value->id }}">
+                    <div class="form-group">
+                        <label for="taskName">Task Name:</label>
+                        <input type="text" class="form-control" id="taskName" name="task_name" required>
+                        <!-- Make sure the name attribute matches the field name in your controller -->
+                    </div>
+                    <div class="form-group">
+                        <label for="taskDesc">Description:</label>
+                        <input type="text" class="form-control" id="taskDesc" name="task_description" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <!-- Display success or error message -->
+                <div id="taskMessage{{ $value->id }}"></div>
+            </div>
+        </div>
+    </div>
 </div>
-    <!-- /.content-header -->
+@endforeach
 
-  <!-- /.content-wrapper -->
+<!-- Modal for inviting users -->
+@foreach($getRecord as $value)
+<div class="modal fade" id="inviteUserModal{{ $value->id }}" tabindex="-1" role="dialog" aria-labelledby="inviteUserModalLabel{{ $value->id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inviteUserModalLabel{{ $value->id }}">Invite Users</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Invite Users Form -->
+                <form id="inviteUserForm{{ $value->id }}" action="{{ route('invite', ['projectId' => $value->id]) }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Invitation</button>
+                </form>
+                <!-- Display success or error message -->
+                <div id="inviteUserMessage{{ $value->id }}" ></div>
+            </div>
+        </div>
+    </div>
+</div>
 
-  @endsection
+<!-- Task Modal -->
+<div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="taskModalLabel">Task Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5 id="taskName"></h5>
+                <p>Status: <span id="taskStatus"></span></p>
+                <p id="taskDescription"></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endforeach
+
+<!-- /.content-wrapper -->
+
+<!-- Your custom JavaScript -->
+<script>
+    $(document).ready(function() {
+        @foreach($getRecord as $value)
+        $('#inviteUserForm{{ $value->id }}').submit(function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (confirm('Invitation sent successfully. Do you want to close the modal?')) {
+                        $('#inviteUserModal{{ $value->id }}').modal('hide');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#inviteUserMessage{{ $value->id }}').html('<div class="alert alert-danger">' + xhr.responseJSON.message + '</div>');
+                }
+            });
+        });
+        $('#taskForm{{ $value->id }}').submit(function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Get the CSRF token
+            var token = "{{ csrf_token() }}";
+            
+            $.ajax({
+                type: 'POST',
+                url: '{{ route("task.submit", ["id" => $value->id]) }}', // Use the correct route with the project ID
+                data: $(this).serialize(),
+                headers: {
+                    'X-CSRF-TOKEN': token // Include CSRF token in headers
+                },
+                success: function(response) {
+                    if (confirm('Task submitted successfully. Do you want to close the modal?')) {
+                        $('#taskModal{{ $value->id }}').modal('hide');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#taskMessage{{ $value->id }}').html('<div class="alert alert-danger">' + xhr.responseJSON.message + '</div>');
+                }
+            });
+        });
+        @endforeach
+    });
+
+
+    $('.view-task').click(function() {
+    var taskName = $(this).data('task-name');
+    $.ajax({
+        url: "{{ route('task.view') }}",
+        type: "GET",
+        data: { task_name: taskName }, // Ensure task_name is properly assigned
+        success: function(response) {
+            $('#taskName').text(response.task_name);
+            $('#taskStatus').text(response.status);
+            $('#taskDescription').text(response.description);
+            $('#taskModal').modal('show'); // Show the modal
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+        }
+    });
+});
+
+</script>
+@endsection
