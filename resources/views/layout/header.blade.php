@@ -50,7 +50,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{url ('admin/subject/list')}}" class="nav-link @if(Request::segment(2) =='classList') active @endif">
+            <a href="{{url ('admin/project/list')}}" class="nav-link @if(Request::segment(2) =='classList') active @endif">
               <i class="nav-icon far fa-user"></i>
               <p>
                 Project List
@@ -58,34 +58,7 @@
             </a>
         </li>
         
-        <!-- Project Section -->
-        <li class="nav-item @if(Request::segment(2) == 'project') menu-is-opening menu-open @endif">
-          <a href="#" class="nav-link  @if(Request::segment(2) =='project') active @endif">
-            <i class="nav-icon fas fa-table"></i>
-            <p>
-              Project
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{{url ('admin/project/project/add')}}" class="nav-link @if(Request::segment(3) =='project') active @endif">
-                <i class="far fa-circle nav-icon"></i>
-                <p>
-                  Create Project
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="tables/jsgrid.html" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>
-                  Project Report
-                </p>
-              </a>
-            </li>
-          </ul>
-        </li>
+
   
         @elseif(Auth::user()->user_type == 3)
         <!-- Project Section -->

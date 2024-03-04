@@ -27,16 +27,6 @@
                           <div class="card-body">
 
                           <div class="form-group">
-                            <label>Subject <span style="color:red">*</span></label>
-                            <select class="form-control" id="getSubject" name="subject_id" required>
-                                <option value="">Select Subject</option>
-                                @foreach($getSubject as $subject)
-                                <option {{ ($getRecord->subject_id == $subject->id) ? 'selected' : '' }}value="{{ $subject->id}}">{{ $subject->name}}</option>
-                                @endforeach
-                            </select>
-                          </div>
-
-                          <div class="form-group">
                             <label>Project Name<span style="color:red">*</span></label>
                             <input type="text" class="form-control" name="subject_id" id="getSubject" value="{{ $getRecord->subject->name ?? '' }}" readonly>
                         </div>

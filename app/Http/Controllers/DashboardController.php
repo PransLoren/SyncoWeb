@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\User;
 use App\Models\ProjectModel;
-use App\Models\SubjectModel;
+
 
 class DashboardController extends Controller
 {
@@ -15,8 +15,6 @@ class DashboardController extends Controller
         if(Auth::user()->user_type == 1){
             $data['getStudent'] = User::getStudent();
             $data['header_title'] = "Student List";
-            $data['getRecord'] = SubjectModel::getRecord();
-            $data['header_title'] = "Subject List";
             return view('Admin.admindash', $data);
         }
         elseif(Auth::user()->user_type == 3){

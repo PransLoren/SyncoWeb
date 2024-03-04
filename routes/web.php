@@ -4,7 +4,6 @@ use App\Http\Controllers\WebAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\studentListController;
-use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\taskController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
@@ -52,13 +51,6 @@ Route::group(['middleware' => 'admin'],function(){
     Route::post('/admin/student/edit/{id}',[studentListController::class,'update']);    
     Route::post('/admin/student/add',[studentListController::class,'insert'])->name('insert');
 
-    //subject
-    Route::get('/admin/subject/list',[SubjectController::class,'subjectList']);
-    Route::get('/admin/subject/add',[SubjectController::class,'add']);
-    Route::get('/admin/subject/edit/{id}',[SubjectController::class,'edit']);   
-    Route::get('/admin/subject/delete/{id}',[SubjectController::class,'delete']);     
-    Route::post('/admin/subject/edit/{id}',[SubjectController::class,'update']);    
-    Route::post('/admin/subject/add',[SubjectController::class,'insert'])->name('insert');
 
     //project
     Route::get('admin/project/list', [ProjectController::class, 'project']);

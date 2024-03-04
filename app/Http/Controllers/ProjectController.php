@@ -22,7 +22,6 @@ class ProjectController extends Controller
     }
     
     public static function add(){
-        $data['getSubject'] = SubjectModel::getSubject();
         $data['header_title'] = 'Add New Project';
         return view('Admin.admin.homework.add', $data);
     }
@@ -51,19 +50,7 @@ class ProjectController extends Controller
         return redirect('admin/project/list')->with('success','Project successfully added');
     }
 
-    public function ajax_get_subject(Request $request)
-    {
-        $class_id = $request->class_id;
-        $getSubject = SubjectModel::MySubject($class_id);
-        $html = '';
-        $html .= '<option value="">Select Subject</option>';
-        foreach ($getSubject as $value)
-        {
-            $html .= 'option value=""'.$value->subject_id.'">' .$value->subject_name.'</option>';
-        }
-        $json['success'] = $html;
-        echo json_encode($json);
-        }
+
         public function edit($id)
         {
             $getRecord = ProjectModel::getSingle($id);
@@ -114,7 +101,7 @@ class ProjectController extends Controller
             $project->is_delete = 2;
             $project->save();
 
-            return redirect()->back()->with('success','Project successfully submit')->with('confirmation', 'Project successfully submit');;
+            return redirect('student/project/list')->back()->with('success','Project successfully submit')->with('confirmation', 'Project successfully submit');;
 
         }
 
@@ -156,6 +143,7 @@ class ProjectController extends Controller
         $taskName = $request->task_name;
         $task = Task::where('task_name', $taskName)->first();
         return response()->json($task);
+
     }
 
 }

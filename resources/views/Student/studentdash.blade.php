@@ -68,7 +68,7 @@
                                         <button class="btn btn-info view-task" data-task-name="{{ $value->task_name }}">View Task</button>
                                         </td>
                                         <td>
-                                            <a href="" class="btn btn-warning">Edit Task</a>
+                                            <a href="{{ url('student/project/project/edit/'.$value->id) }}" class="btn btn-warning">Edit Task</a>
                                         </td>
                                     </tr>
                                     @endforeach
