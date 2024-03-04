@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Assigned</h1>
+                    <h1 class="m-0">Admin Panel</h1>
                 </div>
             </div>
         </div>
@@ -17,56 +17,54 @@
     <!-- Dropdown for Due Date -->
     <div class="container-fluid mt-3">
         <div class="row">
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>Total: {{ $getStudent->total() }} </h3>
-
-                <p>Students list</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="{{ route('student.list') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box" style="background-color: #124E7B; padding: 30px;">
+                    <div class="inner">
+                        <h3 style="font-size: 24px; color: white;">Total: {{ $getStudent->total() }}</h3>
+                        <p style="color: white;">User Lists</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars" style="color: white;"></i>
+                    </div>
+                    <a href="{{ route('student.list') }}" class="small-box-footer" style="color: white;">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
-
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box" style="background-color: #6991AF; padding: 30px;">
+                    <div class="inner">
+                        <h3 style="font-size: 24px; color: white;">44</h3>
+                        <p style="color: white;">Admin Lists</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add" style="color: white;"></i>
+                    </div>
+                    <a href="#" class="small-box-footer" style="color: white;">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
-
-                <p>Unique Visitors</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box" style="background-color: #84C4F4; padding: 30px;">
+                    <div class="inner">
+                        <h3 style="font-size: 24px; color: white;">65</h3>
+                        <p style="color: white;">Created Tasks</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph" style="color: white;"></i>
+                    </div>
+                    <a href="#" class="small-box-footer" style="color: white;">More info <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
             </div>
-          </div>
-          <!-- ./col -->
+            <!-- ./col -->
         </div>
         <!-- /.row -->
         <!-- Main row -->
 
-    <!-- Rest of your content goes here -->
+        <!-- Rest of your content goes here -->
+    </div>
 </div>
 @endsection

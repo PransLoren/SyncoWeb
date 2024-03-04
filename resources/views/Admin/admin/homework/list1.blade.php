@@ -8,10 +8,6 @@
             <h1>Project</h1>
           </div>
 
-          <div class="col-sm-6" style="text-align: right;">
-          <a href="{{url('admin/project/project/add')}}" class="btn btn-primary"> Add New Project</a>
-          </div>
-
     </section>
 
     <section class="content">

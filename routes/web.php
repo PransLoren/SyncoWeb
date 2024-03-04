@@ -71,11 +71,6 @@ Route::group(['middleware' => 'student'],function(){
 
     Route::post('student/project/project/submit/{id}', [ProjectController::class, 'submit']);
 
-    //task
-    Route::get('/student/assigned',[taskController::class,'Assigned']);
-    Route::get('/student/accept',[taskController::class,'Accept']);
-    Route::get('/student/done',[taskController::class,'Done']);
-
      //project
      Route::get('student/project/list', [ProjectController::class, 'project']);
      Route::get('student/project/project/add', [ProjectController::class, 'add']);
