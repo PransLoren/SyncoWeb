@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\studentListController;
 use App\Http\Controllers\taskController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,7 +32,7 @@ Route::post('register', [WebAuthController::class, 'register'])->name('register'
 Route::post('forgot-password',[WebAuthController::class,'PostForgotPassword']);
 Route::post('reset/{token}',[WebAuthController::class,'PostReset']);
 
-
+Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
 
 Route::get('/admin/dashboard', function () {
     return view('Admin.admindash');

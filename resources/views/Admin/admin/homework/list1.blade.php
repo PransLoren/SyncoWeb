@@ -25,8 +25,6 @@
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                      <th>#</th>
-                      <th>Subject</th>
                       <th>Project Name</th>
                       <th>Homework Date</th>
                       <th>Submission Date</th>
@@ -37,12 +35,10 @@
                   <tbody>
                     @foreach($getRecord as $value)
                       <tr>
-                        <td>{{ $value->id}}</td>
                         <td>{{ $value->class_name}}</td>
-                        <td>{{ $value->subject_name}}</td>
-                        <td>{{ date('d-m-Y', strtotime($value->project_date)) }}</td>
                         <td>{{ date('d-m-Y', strtotime($value->submission_date)) }}</td>
                         <td>{{ date('d-m-Y', strtotime($value->created_date)) }}</td>
+                        <td>{{ $value->description }}</td>
                         <td>
                           <a href="{{ url('admin/project/project/edit/'.$value->id) }}" class="btn btn-primary">Edit</a>
                           <form action="{{ url('admin/project/project/delete/'.$value->id) }}" method="POST" style="display: inline;">
