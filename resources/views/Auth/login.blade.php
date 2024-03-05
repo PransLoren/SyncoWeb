@@ -39,6 +39,7 @@
       <div class="panels-container">
         <div class="panel left-panel">
           <div class="content">
+          <img src="uploads\project/image.png" alt="Your Logo" class="logo" />
             <h3>New here ?</h3>
             <p>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
