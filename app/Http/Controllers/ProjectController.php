@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use App\Models\SubjectModel;
 use App\Models\ProjectModel;
 use App\Models\User;
 use App\Models\Task; 
@@ -35,15 +34,7 @@ class ProjectController extends Controller
         $project->description = strip_tags($descriptionWithoutNbsp);
         $project->created_by = Auth::user()->id;
 
-        if(!empty($request->file('document_file'))){
-            $ext = $request->file('document_file')->getClientOriginalExtension();
-            $file = $request->file('document_file');
-            $randomStr = date('Ymdhis').Str::random(20);
-            $filename = strtolower($randomStr).'.'.$ext;
-            $file->move('uploads/project/', $filename);
-
-            $project->document_file = $filename;
-        }
+     
 
         $project->save();
 
@@ -53,10 +44,8 @@ class ProjectController extends Controller
 
         public function edit($id)
         {
-            $getRecord = ProjectModel::getSingle($id);
+            $getRecord = ProjectModel::findOrFail($id);
             $data['getRecord'] = $getRecord;
-            $data ['getSubject'] = SubjectModel::getSubject();
-            $data['getSubject'] = SubjectModel::getSubject();
             $data['header_title'] = 'Edit Project';
             return view('Admin.admin.homework.edit', $data);
         }
@@ -70,15 +59,6 @@ class ProjectController extends Controller
             $project->submission_date = trim($request->submission_date);
             $project->description = trim($request->description);
     
-            if(!empty($request->file('document_file'))){
-                $ext = $request->file('document_file')->getClientOriginalExtension();
-                $file = $request->file('document_file');
-                $randomStr = date('Ymdhis').Str::random(20);
-                $filename = strtolower($randomStr).'.'.$ext;
-                $file->move('uploads/project/', $filename);
-    
-                $project->document_file = $filename;
-            }
     
             $project->save();
     
