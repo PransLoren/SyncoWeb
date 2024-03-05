@@ -2,81 +2,79 @@
 @section('content')
 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper" style="background-color: #E6F0FF;">
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0" style="font-family: 'League Spartan', sans-serif; font-size: 24px; color: #000;">My Projects</h1>
-                </div>
-            </div>
-        </div>
+                    <h1 class="m-0"></h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
     </div>
+
+    <h1>Project Report</h1>
 
     <section class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                @include('message')
-                <div class="card">
-                    <div class="card-header" style="background-color: #6991AF; color: #FFFFFF; font-size: 24px; font-weight: bold;">
-                    <h3 class="card-title">Project List</h3>
-                    </div>
+
+                    @include ('message')
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Project List</h3>
+                        </div>
+                        <!-- /.card-header -->
                         <div class="card-body p-0">
-                            <table class="table table-hover" style="font-family: Arimo, sans-serif;">
-                                <thead class="thead-light">
-                                    <tr style="color: #000;">
-                                    <th>Project Name</th>
-                                    <th>Homework Date</th>
-                                    <th>Submission Date</th>
-                                    <th>Description</th>
-                                    <th>Invite users</th>
-                                    <th>Add Tasks</th>
-                                    <th>Action</th>
-                                    <th>View</th>
-                                    <th>Edit</th>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Project Number</th>            
+                                        <th>Project Name</th>
+                                        <th>Homework Date</th>
+                                        <th>Submission Date</th>
+                                        <th>Description</th>
+                                        <th>Invite users</th>
+                                        <th>Add Tasks</th>
+                                        <th>Action</th>
+                                        <th>View</th>
+                                        <th>Edit</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($getRecord as $key => $value)
-                                    <tr style="background-color: {{ $key % 2 == 0 ? '#6991AF' : '#C7D7EB' }}; color: #000;">
-                                        <td>{{ $value->class_name }}</td>
+                                    @foreach($getRecord as $value)
+                                    <tr>
+                                        <td>{{ $value->id}}</td>
+                                        <td>{{ $value->class_name}}</td>
                                         <td>{{ date('d-m-Y', strtotime($value->project_date)) }}</td>
-                                        <td>{{ date('d-m-Y', strtotime($value->submission_date)) }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($value->submission_date)) }}</td>                                    
                                         <td>{{ $value->description }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#inviteUserModal{{ $value->id }}">
-                                                <i class="fas fa-user-plus"></i> Invite
-                                            </button>
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inviteUserModal{{ $value->id }}">Invite</button>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#taskModal{{ $value->id }}">
-                                                <i class="fas fa-tasks"></i> Create Task
-                                            </button>
+                                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModal{{ $value->id }}">Create Task</button>
                                         </td>
                                         <td>
-                                            <form action="{{ url('student/project/list/'.$value->id) }}" method="POST" style="display: inline;">
+                                            <form action="{{ url('student/project/https://github.com/Kuhwu/Synco/blob/main/resources/views/Admin/admin/homework/list1.blade.phpproject/submit/'.$value->id) }}" method="POST" style="display: inline;">
                                                 @csrf
-                                                <button type="submit" class="btn btn-info btn-sm" onclick="return confirm('Are you sure?')">
-                                                    <i class="fas fa-check"></i> Done
-                                                </button>
+                                                @method('POST')
+                                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to end this task?')">Done</button>
                                             </form>
                                         </td>
                                         <td>
-                                            <button class="btn btn-info btn-sm view-task" data-task-name="{{ $value->task_name }}">
-                                                <i class="fas fa-eye"></i> View
-                                            </button>
+                                        <button class="btn btn-info view-task"  data-task-name="{{ $value->task_name }}">View Task</button>
                                         </td>
                                         <td>
-                                            <a href="{{ url('your-edit-url/'.$value->id) }}" class="btn btn-warning btn-sm">
-                                                <i class="fas fa-edit"></i> Edit
-                                            </a>
+                                            <a href="{{ url('student/project/project/edit/'.$value->id) }}" class="btn btn-warning">Edit Task</a>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div class="mt-3">
+                            <div style="padding: 10px; float: right;">
                                 {!! $getRecord->appends(request()->except('page'))->links() !!}
                             </div>
                         </div>
