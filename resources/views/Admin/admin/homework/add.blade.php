@@ -1,6 +1,30 @@
 @extends('layout.app')
 @section('style')
   <style type="text/css">
+    .content-wrapper {
+      background-color: #d1eaf6; /* Light blue */
+      color: #000; /* Black text */
+    }
+    .card-primary {
+      border: 1px solid #357ca5;
+      background-color: #f8fafc;
+    }
+    .btn-primary {
+      background-color: #357ca5;
+      border-color: #357ca5;
+    }
+    .btn-primary:hover {
+      background-color: #2a5f7d;
+      border-color: #2a5f7d;
+    }
+    .form-group label {
+      color: #357ca5;
+      font-weight: bold;
+    }
+    /* Make the form larger */
+    .card-body {
+      padding: 20px;
+    }
   </style>
 @endsection
 @section('content')
@@ -22,7 +46,7 @@
                 <div class="col-md-12">
                     @include('message')
                     <div class="card card-primary">
-                        <form method="post" action= "" enctype="multipart/form-data">
+                        <form method="post" action="" enctype="multipart/form-data">
                            {{ csrf_field() }}
                           <div class="card-body">
 
@@ -48,7 +72,7 @@
                           </div>
                     </div>
 
-                    <div class="card-footer">
+                    <div class="card-footer" style="text-align: right;">
                         <button type="submit" class="btn btn-primary"> Submit</button>
 
                     </div>
@@ -94,4 +118,4 @@
     });
 
    </script>
-   @endsection
+@endsection
