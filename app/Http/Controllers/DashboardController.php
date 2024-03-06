@@ -7,22 +7,27 @@ use Auth;
 use App\Models\User;
 use App\Models\ProjectModel;
 
-
 class DashboardController extends Controller
 {
-    public function dashboard(){
+    public function dashboard()
+    {
         $data['header_title'] = "Dashboard";
-        if(Auth::user()->user_type == 1){
+
+        // Check the user type
+        if (Auth::user()->user_type == 1) {
+            // If the user is a student
             $data['getStudent'] = User::getStudent();
             $data['header_title'] = "Student List";
             return view('Admin.admindash', $data);
-        }
-        elseif(Auth::user()->user_type == 3){
-            $data['getRecord'] = ProjectModel::getRecord();
+        } elseif (Auth::user()->user_type == 3) {
+            // If the user is a student
+            // Fetch projects associated with the logged-in user
+            $userId = Auth::id();
+            $data['userProjects'] = ProjectModel::where('created_by', $userId)
+                                    ->orderBy('id', 'desc')
+                                    ->paginate(10);
             $data['header_title'] = 'Project';
             return view('Student.studentdash', $data);
         }
     }
-
-   
 }

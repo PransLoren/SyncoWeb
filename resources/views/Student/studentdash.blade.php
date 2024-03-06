@@ -36,15 +36,14 @@
                                         <th>Homework Date</th>
                                         <th>Submission Date</th>
                                         <th>Description</th>
-                                        <th>Invite users</th>
                                         <th>Add Tasks</th>
                                         <th>Action</th>
                                         <th>View</th>
-                                        <th>Edit</th>
+                                        <th>Edit Project</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($getRecord as $value)
+                                    @foreach($userProjects as $value)
                                     <tr>
                                         <td>{{ $value->id}}</td>
                                         <td>{{ $value->class_name}}</td>
@@ -52,30 +51,27 @@
                                         <td>{{ date('d-m-Y', strtotime($value->submission_date)) }}</td>                                    
                                         <td>{{ $value->description }}</td>
                                         <td>
-                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inviteUserModal{{ $value->id }}">Invite</button>
-                                        </td>
-                                        <td>
                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModal{{ $value->id }}">Create Task</button>
                                         </td>
                                         <td>
-                                            <form action="{{ url('student/project/https://github.com/Kuhwu/Synco/blob/main/resources/views/Admin/admin/homework/list1.blade.phpproject/submit/'.$value->id) }}" method="POST" style="display: inline;">
+                                        <form action="{{ url('student/project/submit/'.$value->id) }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('POST')
                                                 <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to end this task?')">Done</button>
                                             </form>
                                         </td>
                                         <td>
-                                        <button class="btn btn-info view-task"  data-task-name="{{ $value->task_name }}">View Task</button>
+                                        <button class="btn btn-info view-task" >View Task</button>
                                         </td>
                                         <td>
-                                            <a href="{{ url('student/project/project/edit/'.$value->id) }}" class="btn btn-warning">Edit Task</a>
+                                            <a href="{{ url('student/project/project/edit/'.$value->id) }}" class="btn btn-warning">Edit</a>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                             <div style="padding: 10px; float: right;">
-                                {!! $getRecord->appends(request()->except('page'))->links() !!}
+                                {!! $userProjects->appends(request()->except('page'))->links() !!}
                             </div>
                         </div>
                     </div>
@@ -86,7 +82,7 @@
 </div>
 
 <!-- Task Modal -->
-@foreach($getRecord as $value)
+@foreach($userProjects as $value)
 <div class="modal fade" id="taskModal{{ $value->id }}" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel{{ $value->id }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -119,61 +115,13 @@
 </div>
 @endforeach
 
-<!-- Modal for inviting users -->
-@foreach($getRecord as $value)
-<div class="modal fade" id="inviteUserModal{{ $value->id }}" tabindex="-1" role="dialog" aria-labelledby="inviteUserModalLabel{{ $value->id }}" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="inviteUserModalLabel{{ $value->id }}">Invite Users</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Invite Users Form -->
-                <form id="inviteUserForm{{ $value->id }}" action="{{ route('invite', ['projectId' => $value->id]) }}" method="POST">
-                    @csrf
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send Invitation</button>
-                </form>
-                <!-- Display success or error message -->
-                <div id="inviteUserMessage{{ $value->id }}" ></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Task Modal -->
-<div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="taskModalLabel">Task Details</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h5 id="taskName"></h5>
-                <p>Status: <span id="taskStatus"></span></p>
-                <p id="taskDescription"></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-@endforeach
 
 <!-- /.content-wrapper -->
 
 <!-- Your custom JavaScript -->
 <script>
     $(document).ready(function() {
-        @foreach($getRecord as $value)
+        @foreach($userProjects as $value)
         $('#inviteUserForm{{ $value->id }}').submit(function(e) {
             e.preventDefault(); // Prevent default form submission
             
@@ -218,23 +166,7 @@
     });
 
 
-    $('.view-task').click(function() {
-    var taskName = $(this).data('task-name');
-    $.ajax({
-        url: "{{ route('task.view') }}",
-        type: "GET",
-        data: { task_name: taskName }, // Ensure task_name is properly assigned
-        success: function(response) {
-            $('#taskName').text(response.task_name);
-            $('#taskStatus').text(response.status);
-            $('#taskDescription').text(response.description);
-            $('#taskModal').modal('show'); // Show the modal
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-        }
-    });
-});
+  
 
 </script>
 @endsection

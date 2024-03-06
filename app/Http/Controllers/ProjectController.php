@@ -33,12 +33,20 @@ class ProjectController extends Controller
         $descriptionWithoutNbsp = str_replace('&nbsp;', '', $request->description);
         $project->description = strip_tags($descriptionWithoutNbsp);
         $project->created_by = Auth::user()->id;
-
-     
-
         $project->save();
 
-        return redirect('admin/project/list')->with('success','Project successfully added');
+
+
+        return redirect('student/project/list')->with('success','Project successfully added');
+    }
+
+    public function invitedProjects()
+    {
+        // Retrieve the projects that the current user has been invited to
+        $invitedProjects = Auth::user()->projects()->paginate(10);
+
+        // Pass the data to the view
+        return view('student/dashboard', compact('invitedProjects'));
     }
 
 
@@ -83,20 +91,6 @@ class ProjectController extends Controller
 
             return redirect('student/project/list')->back()->with('success','Project successfully submit')->with('confirmation', 'Project successfully submit');;
 
-        }
-
-        public function invite(Request $request, $projectId)
-        {
-            // Validate the incoming request data
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
-            ]);
-     
-            if ($validator->fails()) {
-                throw ValidationException::withMessages($validator->errors()->all());
-            }
-    
-            return response()->json(['success' => 'Invitation sent successfully.']);
         }
 
         public function tasksubmit(Request $request)
