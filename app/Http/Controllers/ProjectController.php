@@ -37,7 +37,7 @@ class ProjectController extends Controller
 
 
 
-        return redirect('student/project/list')->with('success','Project successfully added');
+        return redirect('student/')->with('success','Project successfully added');
     }
 
     public function invitedProjects()
@@ -89,35 +89,39 @@ class ProjectController extends Controller
             $project->is_delete = 2;
             $project->save();
 
-            return redirect('student/project/list')->back()->with('success','Project successfully submit')->with('confirmation', 'Project successfully submit');;
+            return redirect('student/dashboard')->with('success','Project successfully submit')->with('confirmation', 'Project successfully submit');;
 
         }
 
-        public function tasksubmit(Request $request)
-    {
-        // Validate the incoming request data
-        $request->validate([
-            'task_name' => 'required|string|max:255',
-           
-        ]);
+        public function tasksubmit(Request $request, $projectId)
+        {
+            // Validate the incoming request data
+            $request->validate([
+                'task_name' => 'required|string|max:255',
+                'task_description' => 'required|string',
+            ]);
+            
+            // Find the project by its ID
+            $project = ProjectModel::findOrFail($projectId);
+            
+            // Create a new task record associated with the project
+            $task = new Task();
+            $task->task_name = $request->task_name;
+            $task->task_description = $request->task_description;
+            
+            // Associate the task with the project
+            $project->tasks()->save($task);
         
-        // Create a new task record
-        $task = new Task();
-        $task->task_name = $request->task_name;
-        $descriptionWithoutNbsp = str_replace('&nbsp;', '', $request->task_description);
-        $task->task_description = strip_tags($descriptionWithoutNbsp);
-        $task->save();
+            // Return a success response
+            return response()->json(['success' => 'Task submitted successfully.']);
+        }
+        
 
-        // Return a success response
-        return response()->json(['success' => 'Task submitted successfully.']);
-    }
-
-    public function viewTask(Request $request, $taskName)
+    public function viewTasks($projectId)
     {
-        $taskName = $request->task_name;
-        $task = Task::where('task_name', $taskName)->first();
-        return response()->json($task);
-
+        $project = ProjectModel::with('tasks')->findOrFail($projectId);
+    
+        return view('Student.viewTask', compact('project'));
     }
-
+    
 }

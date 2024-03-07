@@ -21,17 +21,16 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    @include ('message')
+                    @include('message')
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Project List</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body p-0">
-                            <table class="table table-striped">
+                            <table class="table table-striped" style="background-color: #edf2fb;">
                                 <thead>
                                     <tr>
-                                        <th>Project Number</th>            
                                         <th>Project Name</th>
                                         <th>Homework Date</th>
                                         <th>Submission Date</th>
@@ -44,27 +43,26 @@
                                 </thead>
                                 <tbody>
                                     @foreach($userProjects as $value)
-                                    <tr>
-                                        <td>{{ $value->id}}</td>
+                                    <tr style="background-color: #eff8ff;">
                                         <td>{{ $value->class_name}}</td>
                                         <td>{{ date('d-m-Y', strtotime($value->project_date)) }}</td>
-                                        <td>{{ date('d-m-Y', strtotime($value->submission_date)) }}</td>                                    
+                                        <td>{{ date('d-m-Y', strtotime($value->submission_date)) }}</td>
                                         <td>{{ $value->description }}</td>
                                         <td>
-                                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModal{{ $value->id }}">Create Task</button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModal{{ $value->id }}"><i class="fas fa-plus"></i></button>
                                         </td>
                                         <td>
-                                        <form action="{{ url('student/project/submit/'.$value->id) }}" method="POST" style="display: inline;">
+                                            <form action="{{ url('student/project/project/submit/'.$value->id) }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('POST')
-                                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to end this task?')">Done</button>
+                                                <button type="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want to end this task?')"><i class="fas fa-check"></i></button>
                                             </form>
                                         </td>
                                         <td>
-                                        <button class="btn btn-info view-task" >View Task</button>
+                                            <button class="btn btn-info btn-sm view-task" onclick="window.location.href='{{ route('project.view.tasks', ['projectId' => $value->id]) }}'"><i class="fas fa-eye"></i></button>
                                         </td>
                                         <td>
-                                            <a href="{{ url('student/project/project/edit/'.$value->id) }}" class="btn btn-warning">Edit</a>
+                                            <a href="{{ url('student/project/project/edit/'.$value->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -105,7 +103,7 @@
                         <label for="taskDesc">Description:</label>
                         <input type="text" class="form-control" id="taskDesc" name="task_description" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Submit</button>
                 </form>
                 <!-- Display success or error message -->
                 <div id="taskMessage{{ $value->id }}"></div>
@@ -114,7 +112,6 @@
     </div>
 </div>
 @endforeach
-
 
 <!-- /.content-wrapper -->
 
@@ -164,9 +161,5 @@
         });
         @endforeach
     });
-
-
-  
-
 </script>
 @endsection
