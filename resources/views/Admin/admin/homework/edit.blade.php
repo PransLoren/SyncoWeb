@@ -10,7 +10,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Project</h1>
+                    <h1>Edit Task</h1>
                 </div>
             </div>
         </div>
@@ -22,52 +22,41 @@
                 <div class="col-md-12">
                     @include('message')
                     <div class="card card-primary">
-                        <form method="post" action= "" enctype="multipart/form-data">
+                        <form method="post" action= "{{ url('student/project/project/edit/'.$getRecord->id) }}" enctype="multipart/form-data">
                            {{ csrf_field() }}
                           <div class="card-body">
 
+                          
                           <div class="form-group">
                             <label>Project Name<span style="color:red">*</span></label>
-                            <input type="text" class="form-control" name="subject_id" id="getSubject" value="{{ $getRecord->subject->name ?? '' }}" readonly>
+                            <input type="text" class="form-control" name="class_name" id="getRecord" value="{{ $getRecord->class_name }}" required>
                         </div>
 
                           <div class="form-group">
                             <label>Project Date <span style="color:red">*</span></label>
-                            <input type="date" value = "{{ $getRecord->project_date}}"class="form-control" name="project_date" required>
+                            <input type="date" value="{{ $getRecord->project_date }}" class="form-control" name="project_date" required>
                           </div>
 
                           <div class="form-group">
                             <label>Submission Date <span style="color:red">*</span></label>
-                            <input type="date" value = "{{ $getRecord->submission_date}}" class="form-control" name="submission_date" required>
+                            <input type="date" value="{{ $getRecord->submission_date }}" class="form-control" name="submission_date" required>
                           </div>
-
-                          <div class="form-group">
-                            <label>Document </label>
-                            <input type="file" class="form-control" name="document_file" >
-                            @if(!empty($getRecord->getDocument()))
-                             <a href="{{ $getRecord->getDocument() }}" class="btn btn-primary" donwload="">Download</a>
-                             @endif
-                          </div>
-
-
 
                           <div class="form-group">
                             <label>Description <span style="color:red">*</span></label>
-                            <textarea id="compose-textarea" name="description" class="form-control" style="height: 300px">{{ $getRecord->project_date}}</textarea>
+                            <textarea id="compose-textarea" name="description" class="form-control" style="height: 300px">{{ $getRecord->description}}</textarea>
                           </div>
+                    
                     </div>
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary"> Update</button>
-
                     </div>
                 </form>
                 </div>
             </div>
-
         </div>
-</section>
-
+    </section>
 </div>
 
 @endsection

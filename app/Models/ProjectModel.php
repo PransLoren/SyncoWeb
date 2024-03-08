@@ -11,13 +11,14 @@ class ProjectModel extends Model
 
     protected $table = 'project';
 
-
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'project_user', 'project_id', 'user_id');
+    }
 
     static public function getSingle($id){
         return self::find($id);
     }
-
-
 
     static public function getRecord(){
         $return = ProjectModel::select('project.*')
@@ -29,6 +30,14 @@ class ProjectModel extends Model
         return $return;
     }
 
+    public function tasks()
+    {
+ 
+    return $this->hasMany(Task::class, 'project_id');
+    }
+
+
+    
     public function getDocument(){
         if(!empty($this->document_file) && file_exists('upload/project/' . $this->document_file)){
             return url('upload/project/' . $this->document_file);
