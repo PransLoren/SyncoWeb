@@ -47,7 +47,7 @@ class ProjectController extends Controller
 
         $project->save();
 
-        return redirect('admin/project/list')->with('success','Project successfully added');
+        return redirect('student/project/list')->with('success','Project successfully added');
     }
 
 
@@ -82,7 +82,7 @@ class ProjectController extends Controller
     
             $project->save();
     
-            return redirect('admin/project/list')->with('success','Project successfully updated');
+            return redirect('student/project/list')->with('success','Project successfully updated');
         }
 
         public function delete($id)
@@ -104,46 +104,4 @@ class ProjectController extends Controller
             return redirect('student/project/list')->back()->with('success','Project successfully submit')->with('confirmation', 'Project successfully submit');;
 
         }
-
-        public function invite(Request $request, $projectId)
-        {
-            // Validate the incoming request data
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
-            ]);
-     
-            if ($validator->fails()) {
-                throw ValidationException::withMessages($validator->errors()->all());
-            }
-    
-            return response()->json(['success' => 'Invitation sent successfully.']);
-        }
-
-        public function tasksubmit(Request $request)
-    {
-        // Validate the incoming request data
-        $request->validate([
-            'task_name' => 'required|string|max:255',
-           
-        ]);
-        
-        // Create a new task record
-        $task = new Task();
-        $task->task_name = $request->task_name;
-        $descriptionWithoutNbsp = str_replace('&nbsp;', '', $request->task_description);
-        $task->task_description = strip_tags($descriptionWithoutNbsp);
-        $task->save();
-
-        // Return a success response
-        return response()->json(['success' => 'Task submitted successfully.']);
-    }
-
-    public function viewTask(Request $request, $taskName)
-    {
-        $taskName = $request->task_name;
-        $task = Task::where('task_name', $taskName)->first();
-        return response()->json($task);
-
-    }
-
 }

@@ -70,7 +70,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{url ('/profile')}}" class="nav-link @if(Request::segment(2) =='dashboard') active @endif">
+          <a href="{{url ('student/profile')}}" class="nav-link @if(Request::segment(2) =='profile') active @endif">
             <i class="nav-icon far fa-user"></i>
             <p>
               Profile

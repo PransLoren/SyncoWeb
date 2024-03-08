@@ -26,6 +26,9 @@ Route::get('/registration',[WebAuthController::class,'registration'])->name('reg
 Route::get('logout',[WebAuthController::class,'logout']);
 Route::get('forgot-password',[WebAuthController::class,'forgotpassword']);
 Route::get('reset/{token}',[WebAuthController::class,'reset']);
+Route::get('/student/profile', [WebAuthController::class, 'profile'])->name('student.profile');
+Route::post('/profile/update', [WebAuthController::class, 'update'])->name('profile.update');
+
 
 Route::post('login',[WebAuthController::class,'Authlogin'])->name('login');
 Route::post('register', [WebAuthController::class, 'register'])->name('register');
@@ -37,7 +40,6 @@ Route::get('/notifications', [NotificationController::class, 'index'])->name('no
 Route::get('/admin/dashboard', function () {
     return view('Admin.admindash');
 });
-
 
 Route::group(['middleware' => 'admin'],function(){
 
@@ -68,7 +70,7 @@ Route::group(['middleware' => 'admin'],function(){
 
 Route::group(['middleware' => 'student'],function(){
 
-    Route::get('/student/dashboard',[DashboardController::class,'dashboard']);
+    Route::get('/student/dashboard',[DashboardController::class,'dashboard'])->name('userdashboard');
 
     Route::post('student/project/project/submit/{id}', [ProjectController::class, 'submit']);
 
