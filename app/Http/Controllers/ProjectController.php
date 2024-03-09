@@ -15,7 +15,7 @@ use Str;
 class ProjectController extends Controller
 {
     public function project(){
-        $data['getRecord'] = ProjectModel::getRecord();
+        $data['getRecord'] = ProjectModel::whereNull('deleted_at')->get();
         $data['header_title'] = 'Project';
         return view('Admin.admin.homework.list1', $data);
     }
@@ -86,11 +86,9 @@ class ProjectController extends Controller
         public function submit($id)
         {
             $project = ProjectModel::getSingle($id);
-            $project->is_delete = 2;
-            $project->save();
-
+            $project->delete(); // Soft delete the project
+        
             return redirect('student/dashboard')->with('success','Project successfully submit')->with('confirmation', 'Project successfully submit');;
-
         }
 
         public function tasksubmit(Request $request, $projectId)
@@ -117,11 +115,27 @@ class ProjectController extends Controller
         }
         
 
-    public function viewTasks($projectId)
+        public function viewTasks($projectId)
+        {
+            // Retrieve the project along with its tasks where the status is not "done"
+            $project = ProjectModel::with(['tasks' => function ($query) {
+                $query->where('status', '!=', 2); // Assuming 2 represents "done" status
+            }])->findOrFail($projectId);
+        
+            return view('Student.viewTask', compact('project'));
+        }
+        
+
+    public function markTaskAsDone(Request $request, $projectId, $taskId)
     {
-        $project = ProjectModel::with('tasks')->findOrFail($projectId);
+        // Find the task by its ID and update its status
+        $task = Task::findOrFail($taskId);
+        $task->status = 2; // Assuming 2 represents "done" status
+        $task->save();
     
-        return view('Student.viewTask', compact('project'));
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Task marked as done successfully.');
     }
+    
     
 }

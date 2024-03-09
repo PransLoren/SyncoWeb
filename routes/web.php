@@ -4,7 +4,6 @@ use App\Http\Controllers\WebAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\studentListController;
-use App\Http\Controllers\taskController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('/student/profile', [WebAuthController::class, 'profile'])->name('student.profile');
+Route::post('/profile/update', [WebAuthController::class, 'update'])->name('profile.update');
 
 Route::get('/',[WebAuthController::class,'loginuser'])->name('loginuser');
 Route::get('/registration',[WebAuthController::class,'registration'])->name('registration');
@@ -83,5 +83,7 @@ Route::group(['middleware' => 'student'],function(){
      Route::post('/task/submit/{id}', [ProjectController::class, 'tasksubmit'])->name('task.submit');
      Route::get('/student/project/view/{projectId}', [ProjectController::class, 'viewTasks'])->name('project.view.tasks');
      Route::post('student/project/project/delete/{id}', [ProjectController::class, 'delete']);
+     //task
+     Route::post('/student/project/view/{projectId}/task/{taskId}/done', [ProjectController::class, 'markTaskAsDone'])->name('done.task');
 });
 
