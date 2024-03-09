@@ -14,6 +14,11 @@ use Str;
 
 class ProjectController extends Controller
 {
+    public function adminProjectList(){
+        $data['getRecord'] = ProjectModel::getRecord();
+        $data['header_title'] = 'Project';
+        return view('Admin.admin.homework.listAdmin', $data);
+    }
     public function project(){
         $data['getRecord'] = ProjectModel::whereNull('deleted_at')->get();
         $data['header_title'] = 'Project';
@@ -117,6 +122,7 @@ class ProjectController extends Controller
     
     public function tasksubmit(Request $request, $projectId)
     {
+
         $request->validate([
             'task_name' => 'required|string|max:255',
             'task_description' => 'required|string',

@@ -8,6 +8,11 @@
           <div class="col-sm-6">
             <h1>Admin List</h1>
           </div>
+
+          <div class="col-sm-6" style="text-align: right;">
+          <a href="{{url('/admin/admin/add')}}" class="btn btn-primary"> Add New Admin</a>
+          </div>
+
         </div>
       </div><!-- /.container-fluid -->
     </section>
@@ -23,7 +28,7 @@
             <!-- /.card -->
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Admin List </h3>
+                <h3 class="card-title">Admin List</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
@@ -45,9 +50,6 @@
                     @endforeach
                   </tbody>
                 </table>
-                <div style="padding: 10px; float: right;">
-                  {!! $getRecord->appends(request()->except('page'))->links() !!}
-                </div>
               </div>
               <!-- /.card-body -->
             </div>

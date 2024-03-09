@@ -45,6 +45,8 @@ Route::group(['middleware' => 'admin'],function(){
 
     Route::get('/admin/dashboard',[DashboardController::class,'dashboard']);
     Route::get('/admin/admin/list',[AdminController::class,'list']);
+    Route::get('/admin/admin/add',[AdminController::class,'add']);
+    Route::post('/admin/admin/add',[AdminController::class,'insert'])->name('insert');
 
     //student
     Route::get('/admin/student/list',[studentListController::class,'studentList'])->name('student.list');
@@ -57,6 +59,7 @@ Route::group(['middleware' => 'admin'],function(){
 
     //project
     Route::get('admin/project/list', [ProjectController::class, 'project']);
+    Route::get('admin/project/list', [ProjectController::class, 'adminProjectList']);
     Route::get('admin/project/project/add', [ProjectController::class, 'add']);
     Route::post('admin/ajax_get_subject', [ProjectController::class, 'ajax_get_subject']);
     Route::post('admin/project/project/add', [ProjectController::class, 'insert']);
