@@ -75,14 +75,14 @@ class ProjectController extends Controller
         public function submit($id)
         {
             $project = ProjectModel::getSingle($id);
-            $project->delete(); // Soft delete the project
+            $project->delete(); 
         
             return redirect('student/dashboard')->with('success','Project successfully submit')->with('confirmation', 'Project successfully submit');;
         }
 
         public function invite(Request $request, $projectId)
         {
-            // Validate the incoming request data
+          
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
             ]);
@@ -96,9 +96,9 @@ class ProjectController extends Controller
 
         public function viewTasks($projectId)
         {
-            // Retrieve the project along with its tasks where the status is not "done"
+    
             $project = ProjectModel::with(['tasks' => function ($query) {
-                $query->where('status', '!=', 2); // Assuming 2 represents "done" status
+                $query->where('status', '!=', 2); 
             }])->findOrFail($projectId);
         
             return view('Student.viewTask', compact('project'));
@@ -107,34 +107,32 @@ class ProjectController extends Controller
 
     public function markTaskAsDone(Request $request, $projectId, $taskId)
     {
-        // Find the task by its ID and update its status
         $task = Task::findOrFail($taskId);
-        $task->status = 2; // Assuming 2 represents "done" status
+        $task->status = 2; 
         $task->save();
     
-        // Redirect back with a success message
         return redirect()->back()->with('success', 'Task marked as done successfully.');
     }
     
     
-        public function tasksubmit(Request $request)
+    public function tasksubmit(Request $request, $projectId)
     {
-        // Validate the incoming request data
         $request->validate([
             'task_name' => 'required|string|max:255',
-           
+            'task_description' => 'required|string',
         ]);
         
-        // Create a new task record
+
+        $project = ProjectModel::findOrFail($projectId);
+        
         $task = new Task();
         $task->task_name = $request->task_name;
-        $descriptionWithoutNbsp = str_replace('&nbsp;', '', $request->task_description);
-        $task->task_description = strip_tags($descriptionWithoutNbsp);
+        $task->task_description = $request->task_description;
+        $task->project_id = $projectId;
         $task->save();
-
-        // Return a success response
         return response()->json(['success' => 'Task submitted successfully.']);
     }
+    
 
     public function viewTask(Request $request, $taskName)
     {
