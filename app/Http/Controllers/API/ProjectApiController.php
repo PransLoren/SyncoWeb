@@ -98,4 +98,46 @@ class ProjectApiController extends Controller
 
         return response()->json(['message' => 'Project successfully deleted']);
     }
+
+    public function invite(Request $request, $projectId)
+        {
+            // Validate the incoming request data
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+            ]);
+     
+            if ($validator->fails()) {
+                throw ValidationException::withMessages($validator->errors()->all());
+            }
+    
+            return response()->json(['success' => 'Invitation sent successfully.']);
+        }
+
+        public function tasksubmit(Request $request)
+        {
+        // Validate the incoming request data
+        $request->validate([
+            'task_name' => 'required|string|max:255',
+           
+        ]);
+        
+        // Create a new task record
+        $task = new Task();
+        $task->task_name = $request->task_name;
+        $descriptionWithoutNbsp = str_replace('&nbsp;', '', $request->task_description);
+        $task->task_description = strip_tags($descriptionWithoutNbsp);
+        $task->save();
+
+        // Return a success response
+        return response()->json(['success' => 'Task submitted successfully.']);
+        }
+
+        public function viewTask(Request $request, $taskName)
+        {
+            $taskName = $request->task_name;
+            $task = Task::where('task_name', $taskName)->first();
+            return response()->json($task);
+
+        }
+
 }

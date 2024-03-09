@@ -35,18 +35,7 @@ class ProjectController extends Controller
         $project->created_by = Auth::user()->id;
         $project->save();
 
-
-
-        return redirect('student/')->with('success','Project successfully added');
-    }
-
-    public function invitedProjects()
-    {
-        // Retrieve the projects that the current user has been invited to
-        $invitedProjects = Auth::user()->projects()->paginate(10);
-
-        // Pass the data to the view
-        return view('student/dashboard', compact('invitedProjects'));
+        return redirect('student/project/list')->with('success','Project successfully added');
     }
 
 
@@ -70,7 +59,7 @@ class ProjectController extends Controller
     
             $project->save();
     
-            return redirect('admin/project/list')->with('success','Project successfully updated');
+            return redirect('student/project/list')->with('success','Project successfully updated');
         }
 
         public function delete($id)
@@ -91,29 +80,19 @@ class ProjectController extends Controller
             return redirect('student/dashboard')->with('success','Project successfully submit')->with('confirmation', 'Project successfully submit');;
         }
 
-        public function tasksubmit(Request $request, $projectId)
+        public function invite(Request $request, $projectId)
         {
             // Validate the incoming request data
-            $request->validate([
-                'task_name' => 'required|string|max:255',
-                'task_description' => 'required|string',
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
             ]);
-            
-            // Find the project by its ID
-            $project = ProjectModel::findOrFail($projectId);
-            
-            // Create a new task record associated with the project
-            $task = new Task();
-            $task->task_name = $request->task_name;
-            $task->task_description = $request->task_description;
-            
-            // Associate the task with the project
-            $project->tasks()->save($task);
-        
-            // Return a success response
-            return response()->json(['success' => 'Task submitted successfully.']);
+     
+            if ($validator->fails()) {
+                throw ValidationException::withMessages($validator->errors()->all());
+            }
+    
+            return response()->json(['success' => 'Invitation sent successfully.']);
         }
-        
 
         public function viewTasks($projectId)
         {
@@ -138,4 +117,31 @@ class ProjectController extends Controller
     }
     
     
+        public function tasksubmit(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'task_name' => 'required|string|max:255',
+           
+        ]);
+        
+        // Create a new task record
+        $task = new Task();
+        $task->task_name = $request->task_name;
+        $descriptionWithoutNbsp = str_replace('&nbsp;', '', $request->task_description);
+        $task->task_description = strip_tags($descriptionWithoutNbsp);
+        $task->save();
+
+        // Return a success response
+        return response()->json(['success' => 'Task submitted successfully.']);
+    }
+
+    public function viewTask(Request $request, $taskName)
+    {
+        $taskName = $request->task_name;
+        $task = Task::where('task_name', $taskName)->first();
+        return response()->json($task);
+
+    }
+
 }

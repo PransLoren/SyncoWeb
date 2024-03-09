@@ -25,6 +25,10 @@
   <link rel="stylesheet" href="{{url ('assets/adminassets/plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{url ('assets/adminassets/plugins/summernote/summernote-bs4.min.css')}}">
+
+  <link rel="stylesheet" href="{{url('assets/css/profile.css')}}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 
 <head>
