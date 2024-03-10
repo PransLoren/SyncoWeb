@@ -119,29 +119,23 @@ class WebAuthController extends Controller
 
     public function update(Request $request)
     {
-        // Validate the request data
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . Auth::id(),
             'password' => 'nullable|string|min:5|max:20|confirmed',
         ]);
 
-        // Get the currently authenticated user
         $user = Auth::user();
 
-        // Update the user's name and email
         $user->name = $request->input('name');
         $user->email = $request->input('email');
 
-        // Update the user's password if provided
         if ($request->filled('password')) {
             $user->password = bcrypt($request->input('password'));
         }
 
-        // Save the changes
         $user->save();
 
-        // Redirect back with a success message
         return redirect()->route('student.profile')->with('success', 'Profile updated successfully!');
     }
 
