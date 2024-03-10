@@ -17,7 +17,9 @@ class DashboardController extends Controller
         if (Auth::user()->user_type == 1) {
             // If the user is a student
             $data['getStudent'] = User::getStudent();
-            $data['header_title'] = "Student List";
+            $data['getAdmin'] = User::getAdmin();
+            $data['getRecord'] = ProjectModel::getRecord();
+            $data['header_title'] = "Dashboard";
             return view('Admin.admindash', $data);
         } elseif (Auth::user()->user_type == 3) {
             // If the user is a student

@@ -34,16 +34,24 @@
         </li>
 
         <li class="nav-item">
-            <a href="{{ url('admin/student/list') }}" class="nav-link @if(Request::segment(2) =='studentList') active @endif">
+            <a href="{{ url('admin/student/list') }}" class="nav-link @if(Request::segment(2) =='student') active @endif">
                 <i class="nav-icon fas fa-users"></i>
                 <p>Users</p>
             </a>
         </li>
         <li class="nav-item">
-            <a href="{{ url('admin/project/list') }}" class="nav-link @if(Request::segment(2) =='classList') active @endif">
+            <a href="{{ url('admin/project/list') }}" class="nav-link @if(Request::segment(2) =='project') active @endif">
                 <i class="nav-icon fas fa-tasks"></i>
                 <p>Project List</p>
             </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{url ('student/profile')}}" class="nav-link @if(Request::segment(2) =='profile') active @endif">
+            <i class="nav-icon far fa-user"></i>
+            <p>
+              Profile
+            </p>
+          </a>
         </li>
 
         @elseif(Auth::user()->user_type == 3)

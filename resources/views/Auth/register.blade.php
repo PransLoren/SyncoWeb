@@ -47,7 +47,6 @@
       <div class="panels-container">
         <div class="panel left-panel">
           <div class="content">
-          <img src="uploads\project/image.png" alt="Your Logo" class="logo" />
             <h3>One of Us?</h3>
             <p>
               Mastering the Art of Project Management Guiding Vision, Strategic Execution, and Seamless Collaboration for Optimal Results.
@@ -58,7 +57,7 @@
               </button>
             </a>
           </div>
-          <img src="#" class="image" alt="" />
+          <img src="{{url('assets/adminassets/dist/img/Syncologo.png')}}" class="image" alt="" />
         </div>
       </div>
     </div>

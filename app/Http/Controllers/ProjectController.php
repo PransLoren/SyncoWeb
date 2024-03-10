@@ -20,7 +20,7 @@ class ProjectController extends Controller
         return view('Admin.admin.homework.listAdmin', $data);
     }
     public function project(){
-        $data['getRecord'] = ProjectModel::whereNull('deleted_at')->get();
+        $data['getRecord'] = ProjectModel::paginate(10);
         $data['header_title'] = 'Project';
         return view('Admin.admin.homework.list1', $data);
     }
@@ -56,7 +56,6 @@ class ProjectController extends Controller
         {
             $project = ProjectModel::getSingle($id);
             $project->class_name = trim($request->class_name);
-            $project->subject_name = trim($request->subject_name);
             $project->project_date = trim($request->project_date);
             $project->submission_date = trim($request->submission_date);
             $project->description = trim($request->description);
@@ -64,7 +63,7 @@ class ProjectController extends Controller
     
             $project->save();
     
-            return redirect('student/project/list')->with('success','Project successfully updated');
+            return redirect('student/dashboard')->with('success','Project successfully updated');
         }
 
         public function delete($id)
