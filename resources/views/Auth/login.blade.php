@@ -3,19 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      src="https://kit.fontawesome.com/64d58efce2.js"
-      crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{url ('assets/css/syncoauthentication.css')}}" />
     <title>Welcome | Sync-o</title>
+    <script>
+      function checkPassword() {
+        var correctPassword = "12345678";
+
+        var enteredPassword = document.querySelector('input[name="password"]').value;
+      
+        if (enteredPassword !== correctPassword) {
+            alert("Wrong password. Please try again.");
+            return false;
+        }
+        return true;
+      }
+    </script>
   </head>
   <body>
     <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
-          <form action="{{url('login')}}" class="sign-in-form" method="POST">
-          {{csrf_field()}}
-          @include ('message')
+          <form action="{{url('login')}}" class="sign-in-form" method="POST" onsubmit="return checkPassword();">
+            {{csrf_field()}}
+            @include ('message')
             <h2 class="title">Sign in</h2>
             <div class="input-field">
               <i class="fas fa-envelope"></i>

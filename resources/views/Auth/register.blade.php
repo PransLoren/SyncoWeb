@@ -49,8 +49,8 @@
           <div class="content">
             <h3>One of Us?</h3>
             <p>
-              Mastering the Art of Project Management Guiding Vision, Strategic Execution, and Seamless Collaboration for Optimal Results.
-            </p>
+            Embark on a personalized journey through our website's exclusive content – Log in now to explore and access a diverse range of unique experiences    
+          </p>
             <a href="{{url('/')}}">
               <button class="btn transparent" id="sign-up-btn">
                 Sign In
