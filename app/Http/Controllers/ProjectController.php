@@ -40,7 +40,7 @@ class ProjectController extends Controller
         $project->created_by = Auth::user()->id;
         $project->save();
 
-        return redirect('student/project/list')->with('success','Project successfully added');
+        return redirect('student/dashboard')->with('success','Project successfully added');
     }
 
 
