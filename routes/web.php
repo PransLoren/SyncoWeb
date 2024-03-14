@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\studentListController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ProjectInvitationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,5 +91,10 @@ Route::group(['middleware' => 'student'],function(){
      Route::post('student/project/project/delete/{id}', [ProjectController::class, 'delete']);
      //task
      Route::post('/student/project/view/{projectId}/task/{taskId}/done', [ProjectController::class, 'markTaskAsDone'])->name('done.task');
+
+     Route::post('/projects/{project}/invite', [ProjectInvitationController::class, 'invite'])->name('projects.invite');
+
+    Route::post('/projects/{project}/accept-invitation', [ProjectInvitationController::class, 'acceptInvitation'])->name('projects.acceptInvitation');
+    Route::post('/projects/{project}/reject-invitation', [ProjectInvitationController::class, 'rejectInvitation'])->name('projects.rejectInvitation');
 });
 

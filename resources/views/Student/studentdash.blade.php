@@ -39,6 +39,7 @@
                                         <th>Action</th>
                                         <th>View</th>
                                         <th>Edit Project</th>
+                                        <th>Invite Users</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -64,6 +65,9 @@
                                         <td>
                                             <a href="{{ url('student/project/project/edit/'.$value->id) }}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
                                         </td>
+                                        <td> 
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#inviteUserModal{{ $value->id }}">Invite User</button>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -78,6 +82,33 @@
         </div>
     </section>
 </div>
+@foreach($userProjects as $value)
+<div class="modal fade" id="inviteUserModal{{ $value->id }}" tabindex="-1" role="dialog" aria-labelledby="inviteUserModalLabel{{ $value->id }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="inviteUserModalLabel{{ $value->id }}">Invite User to {{ $value->class_name }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Invite User Form -->
+                <form id="inviteUserForm{{ $value->id }}" action="{{ route('projects.invite', ['project' => $value->id]) }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Invite</button>
+                </form>
+                <!-- Display success or error message -->
+                <div id="inviteUserMessage{{ $value->id }}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 
 <!-- Task Modal -->
 @foreach($userProjects as $value)
@@ -156,6 +187,29 @@
                 },
                 error: function(xhr, status, error) {
                     $('#taskMessage{{ $value->id }}').html('<div class="alert alert-danger">' + xhr.responseJSON.message + '</div>');
+                }
+            });
+        });
+        @endforeach
+    });
+
+
+    $(document).ready(function() {
+        @foreach($userProjects as $value)
+        $('#inviteUserForm{{ $value->id }}').submit(function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (confirm('Invitation sent successfully. Do you want to close the modal?')) {
+                        $('#inviteUserModal{{ $value->id }}').modal('hide');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    $('#inviteUserMessage{{ $value->id }}').html('<div class="alert alert-danger">' + xhr.responseJSON.message + '</div>');
                 }
             });
         });
