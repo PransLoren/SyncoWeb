@@ -94,7 +94,7 @@ Route::group(['middleware' => 'student'],function(){
 
      Route::post('/projects/{project}/invite', [ProjectInvitationController::class, 'invite'])->name('projects.invite');
 
-    Route::post('/projects/{project}/accept-invitation', [ProjectInvitationController::class, 'acceptInvitation'])->name('projects.acceptInvitation');
+    Route::get('/projects/{project}/accept-invitation', [ProjectInvitationController::class, 'acceptInvitation'])->name('projects.acceptInvitation');
     Route::post('/projects/{project}/reject-invitation', [ProjectInvitationController::class, 'rejectInvitation'])->name('projects.rejectInvitation');
 });
 

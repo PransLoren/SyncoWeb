@@ -6,9 +6,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\ProjectModel;
 use Illuminate\Http\Request;
-use App\Notifications\EmailProjectInvitation;
-use App\Notifications\EmailAcceptInvitation;
-use App\Notifications\EmailRejectInvitation;
+use App\Notifications\EmailProjectInvitationNotification;
+use App\Notifications\EmailAcceptInvitationNotification;
+use App\Notifications\EmailRejectInvitationNotification;
 
 class ProjectInvitationController extends Controller
 {
@@ -33,7 +33,7 @@ class ProjectInvitationController extends Controller
         }
 
         // Send invitation via email
-        $user->notify(new EmailProjectInvitation($project));
+        $user->notify(new EmailProjectInvitationNotification($project));
 
         return back()->with('success', 'Invitation sent successfully.');
     }
@@ -47,7 +47,7 @@ class ProjectInvitationController extends Controller
         $project->users()->attach($user);
 
         // Send notification
-        $user->notify(new EmailAcceptInvitation($project));
+        $user->notify(new EmailAcceptInvitationNotification($project));
 
         return back()->with('success', 'Invitation accepted successfully!');
     }
@@ -61,7 +61,7 @@ class ProjectInvitationController extends Controller
         $project->users()->detach($user);
 
         // Send notification
-        $user->notify(new EmailRejectInvitation($project));
+        $user->notify(new EmailRejectInvitationNotification($project));
 
         return back()->with('success', 'Invitation rejected successfully!');
     }

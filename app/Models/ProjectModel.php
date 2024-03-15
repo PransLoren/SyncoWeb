@@ -16,11 +16,18 @@ class ProjectModel extends Model
         return $this->belongsToMany(User::class, 'project_user', 'project_id', 'user_id');
     }
 
-    static public function getSingle($id){
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'project_id');
+    }
+
+    static public function getSingle($id)
+    {
         return self::find($id);
     }
 
-    static public function getRecord(){
+    static public function getRecord()
+    {
         $return = ProjectModel::select('project.*')
                     ->join('users', 'users.id', '=', 'project.created_by')
                     ->orderBy('project.id', 'desc')
@@ -30,15 +37,8 @@ class ProjectModel extends Model
         return $return;
     }
 
-    public function tasks()
+    public function getDocument()
     {
- 
-    return $this->hasMany(Task::class, 'project_id');
-    }
-
-
-    
-    public function getDocument(){
         if(!empty($this->document_file) && file_exists('upload/project/' . $this->document_file)){
             return url('upload/project/' . $this->document_file);
         }

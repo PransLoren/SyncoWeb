@@ -10,7 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens,HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
+
     protected $fillable = [
         'name',
         'email',
@@ -27,17 +28,22 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function projects()
+    {
+        return $this->belongsToMany(ProjectModel::class, 'project_user', 'user_id', 'project_id');
+    }
+
     public function teacherStudents()
     {
         return $this->hasMany(AssignSubjectApiTeacher::class, 'teacher_id', 'id');
     }
 
-    public static function getSingle($id)
+    static public function getSingle($id)
     {
         return self::find($id);
     }
 
-    public static function getAdmin()
+    static public function getAdmin()
     {
         $query = self::query()->where('user_type', 1)->where('is_delete', 0);
         if (!empty(Request::get('email'))) {
@@ -59,9 +65,8 @@ class User extends Authenticatable
             ->paginate(20);
     }
     
-    
-
-    static function getStudent(){
+    static function getStudent()
+    {
         $return = User::select('users.*')
                         ->where('user_type','=',3)
                         ->where('is_delete','=',0);
@@ -72,7 +77,8 @@ class User extends Authenticatable
         return $return;
     }
 
-    static function getTeacherClass(){
+    static function getTeacherClass()
+    {
         $return = User::select('users.*')
                         ->where('user_type','=',2)
                         ->where('is_delete','=',0);
@@ -83,11 +89,13 @@ class User extends Authenticatable
         return $return;
     }
 
-    static public function getEmailSingle($email){
+    static public function getEmailSingle($email)
+    {
         return User::where('email', '=', $email)->first();
     }
 
-    static public function getTokenSingle($remember_token){
+    static public function getTokenSingle($remember_token)
+    {
         return User::where('remember_token', '=', $remember_token)->first();
     }
 }
