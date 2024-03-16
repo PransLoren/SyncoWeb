@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\WebAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
@@ -28,8 +27,6 @@ Route::get('logout',[WebAuthController::class,'logout']);
 Route::get('forgot-password',[WebAuthController::class,'forgotpassword']);
 Route::get('reset/{token}',[WebAuthController::class,'reset']);
 Route::get('/student/profile', [WebAuthController::class, 'profile'])->name('student.profile');
-Route::post('/profile/update', [WebAuthController::class, 'update'])->name('profile.update');
-
 
 Route::post('login',[WebAuthController::class,'Authlogin'])->name('login');
 Route::post('register', [WebAuthController::class, 'register'])->name('register');
@@ -52,10 +49,10 @@ Route::group(['middleware' => 'admin'],function(){
     //student
     Route::get('/admin/student/list',[studentListController::class,'studentList'])->name('student.list');
     Route::get('/admin/student/add',[studentListController::class,'add']);
-    Route::get('/admin/student/edit/{id}',[studentListController::class,'edit']);   
+    Route::get('/admin/student/edit/{id}',[studentListController::class,'edit'])->name('student.edit');   
     Route::get('/admin/student/delete/{id}',[studentListController::class,'delete']);     
-    Route::post('/admin/student/edit/{id}',[studentListController::class,'update']);    
-    Route::post('/admin/student/add',[studentListController::class,'insert'])->name('insert');
+    Route::post('/admin/student/edit/{id}',[studentListController::class,'update'])->name('student.update');    
+    Route::post('/admin/student/add',[studentListController::class,'insert'])->name('student.insert');
 
 
     //project
@@ -97,4 +94,3 @@ Route::group(['middleware' => 'student'],function(){
     Route::get('/projects/{project}/accept-invitation', [ProjectInvitationController::class, 'acceptInvitation'])->name('projects.acceptInvitation');
     Route::post('/projects/{project}/reject-invitation', [ProjectInvitationController::class, 'rejectInvitation'])->name('projects.rejectInvitation');
 });
-

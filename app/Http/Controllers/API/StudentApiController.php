@@ -18,49 +18,6 @@ class StudentApiController extends Controller
         return response()->json(['data' => $students]);
     }
 
-    public function add()
-    {
-        $classes = ClassModel::all();
-        return response()->json(['classes' => $classes]);
-    }
-
-    public function insert(Request $request)
-    {
-        $request->validate([
-            'name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'gender' => 'required',
-            'subject_id' => 'required',
-            'status' => 'required',
-            'profile_pic' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        $student = new User;
-        $student->name = trim($request->name);
-        $student->last_name = trim($request->last_name);
-        $student->gender = trim($request->gender);
-        $student->subject_id = trim($request->subject_id);
-        $student->date_of_birth = $request->date_of_birth;
-        $student->status = trim($request->status);
-        $student->email = trim($request->email);
-        $student->password = Hash::make($request->password);
-        $student->user_type = 3;
-
-        // Handle profile picture upload
-        if ($request->hasFile('profile_pic')) {
-            $profilePic = $request->file('profile_pic');
-            $profilePicName = time() . '_' . Str::random(10) . '.' . $profilePic->getClientOriginalExtension();
-            $profilePic->move(public_path('uploads/profile'), $profilePicName);
-            $student->profile_pic = $profilePicName;
-        }
-
-        $student->save();
-
-        return response()->json(['message' => 'Student successfully created'], 201);
-    }
-
     public function edit($id)
     {
         $student = User::find($id);

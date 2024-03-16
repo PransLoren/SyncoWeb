@@ -20,29 +20,20 @@
           <div class="col-md-12">
             <div class="card card-primary">
               <!-- form start -->
-              <form action="" method="POST">
+              <form action="{{ route('student.edit', ['id' => $getStudent->id]) }}" method="POST">
               {{csrf_field()}}
                 <div class="card-body">
                     <div class = "row">
                         
                         <div class="form-group col-md-6">
-                            <label>Subject<span style="color: red;">*</span></label>
-                            <select class="form-control" required name="class_id">
-                                <option value="">Select Subject</option>
-                                @foreach($getSubject as $value)
-                                  <option {{  (old('class_id', $getStudent->class_id) == $value->id) ? 'selected' : '' }} value ="{{ $value->id }}">{{ $value->name }}</option> 
-                                @endforeach
-
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Profile Picture<span style="color: red;">*</span></label>
-                            <input type="file" class="form-control" name="profile_pic">
+                        <div class="form-group">
+                    <label>Name<span style="color: red;">*</span></label>
+                    <input type="name" class="form-control" name="name" value = "{{old('email',  $getStudent->name)}}"  placeholder="Name" required>
+                    <div style="color:red">{{$errors->first('name')}}</div>
+                  </div>
                         </div>
                     </div>
-                    
                     <hr />
-
                   <div class="form-group">
                     <label>Email address<span style="color: red;">*</span></label>
                     <input type="email" class="form-control" name="email" value = "{{old('email',  $getStudent->email)}}"  placeholder="Email" required>
@@ -50,7 +41,7 @@
                   </div>
                   <div class="form-group">
                     <label>Password<span style="color: red;"></span></label>
-                    <input type="text" class="form-control" name="password" placeholder="Password" required>
+                    <input type="text" class="form-control" name="password" placeholder="Password">
                     <p>Do you want to change your password? Add a password. </p>
                   </div>
                 </div>

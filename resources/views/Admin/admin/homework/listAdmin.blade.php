@@ -28,27 +28,18 @@
                                 <thead>
                                     <tr>
                                         <th><i class="fas fa-file"></i> Project Name</th>
-                                        <th><i class="far fa-calendar-alt"></i> Homework Date</th>
+                                        <th><i class="far fa-calendar-alt"></i> Project Date</th>
                                         <th><i class="far fa-calendar-alt"></i> Submission Date</th>
                                         <th><i class="fas fa-info-circle"></i> Description</th>
-                                        <th><i class="fas fa-cogs"></i> Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($getRecord as $value)
                                     <tr style="background-color: #eff8ff;">
-                                        <td>{{ $value->class_name}}</td>
+                                        <td>{{ $value->class_name }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($value->project_date)) }}</td>
                                         <td>{{ date('d-m-Y', strtotime($value->submission_date)) }}</td>
-                                        <td>{{ date('d-m-Y', strtotime($value->created_date)) }}</td>
                                         <td>{{ $value->description }}</td>
-                                        <td>
-                                            <a href="{{ url('admin/project/project/edit/'.$value->id) }}" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                                            <form action="{{ url('admin/project/project/delete/'.$value->id) }}" method="POST" style="display: inline;">
-                                                @csrf
-                                                @method('POST')
-                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this project?')"><i class="fas fa-trash"></i> Delete</button>
-                                            </form>
-                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

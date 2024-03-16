@@ -100,23 +100,22 @@ class ProjectController extends Controller
 
         public function viewTasks($projectId)
         {
-    
+
             $project = ProjectModel::with(['tasks' => function ($query) {
-                $query->where('status', '!=', 2); 
+                $query->where('status', '!=', 'completed'); 
             }])->findOrFail($projectId);
-        
+
             return view('Student.viewTask', compact('project'));
         }
         
 
-    public function markTaskAsDone(Request $request, $projectId, $taskId)
-    {
-        $task = Task::findOrFail($taskId);
-        $task->status = 2; 
-        $task->save();
+        public function markTaskAsDone(Request $request, $projectId, $taskId)
+        {
+            $task = Task::findOrFail($taskId);
+            $task->delete(); 
     
-        return redirect()->back()->with('success', 'Task marked as done successfully.');
-    }
+            return redirect('student/dashboard')->with('success','Project successfully submit')->with('confirmation', 'Project successfully submit');
+        }
     
     
     public function tasksubmit(Request $request, $projectId)
@@ -144,7 +143,6 @@ class ProjectController extends Controller
         $taskName = $request->task_name;
         $task = Task::where('task_name', $taskName)->first();
         return response()->json($task);
-
     }
 
 }
